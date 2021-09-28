@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "NotesShip helps you to keep your notes/tasks on the cloud so that you can access them from anywhere.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "notes-app",
+    "tasks",
+    "notes"
+  ],
+  "author": "Huzaifa Mohammed",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
