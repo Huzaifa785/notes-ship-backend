@@ -4,6 +4,7 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const authenticateUser = require("../middleware/authenticateUser");
 
 const JWT_SECRET = "9fmq`qpA4uLJSj(m";
 
@@ -106,11 +107,12 @@ router.post(
 );
 
 // Get user details using POST method at the endpoint: /api/auth/get-user
-router.post("/get-user", async (req, res) => {
+router.post("/get-user", [authenticateUser], async (req, res) => {
 
   try {
-    let userId = "todo"
+    let userId = req.user.id
     const user = await User.findById(userId).select("-password")
+    res.send(user)
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error!" });
