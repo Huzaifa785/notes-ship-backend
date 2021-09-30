@@ -15,7 +15,10 @@
   "author": "Huzaifa Mohammed",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "express-validator": "^6.12.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.8"
   },
   "devDependencies": {
