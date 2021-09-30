@@ -108,11 +108,10 @@ router.post(
 
 // Get user details using POST method at the endpoint: /api/auth/get-user
 router.post("/get-user", [authenticateUser], async (req, res) => {
-
   try {
-    let userId = req.user.id
-    const user = await User.findById(userId).select("-password")
-    res.send(user)
+    let userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.send(user);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error!" });
