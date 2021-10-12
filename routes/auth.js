@@ -6,7 +6,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authenticateUser = require("../middleware/authenticateUser");
 
-const JWT_SECRET = "9fmq`qpA4uLJSj(m";
+const dotenv = require("dotenv");
+dotenv.config();
 
 // Create a user using POST at the endpoint: /api/auth/create-user
 router.post(
@@ -50,7 +51,7 @@ router.post(
         },
       };
 
-      const authToken = jwt.sign(data, JWT_SECRET);
+      const authToken = jwt.sign(data, process.env.JWT_SECRET);
 
       res.json({ authToken });
     } catch (error) {
@@ -96,9 +97,9 @@ router.post(
         },
       };
 
-      const authToken = jwt.sign(data, JWT_SECRET);
+      const authToken = jwt.sign(data, process.env.JWT_SECRET);
 
-      res.json({ authToken });
+      res.json({ authToken, name: user.name });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal Server Error!" });
@@ -110,7 +111,7 @@ router.post(
 router.post("/get-user", [authenticateUser], async (req, res) => {
   try {
     let userId = req.user.id;
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId);
     res.send(user);
   } catch (error) {
     console.log(error);

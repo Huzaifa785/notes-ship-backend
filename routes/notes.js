@@ -49,6 +49,30 @@ router.post(
   }
 );
 
+// Get a note using GET method with id at the endpoint: /api/notes/get-note/:id
+router.get("/get-note/:id", [authenticateUser], async (req, res) => {
+  try {
+    // Find the note to be updated and update it
+    let note = await Note.findById(req.params.id);
+    if (!note) {
+      return res.status(400).json({ message: "Note not found!" });
+    }
+
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).json({ message: "Permission denied!" });
+    }
+
+    note = await Note.findById(
+      req.params.id,
+    );
+
+    res.json(note);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error!" });
+  }
+});
+
 // Update an new note using PUT method at the endpoint: /api/notes/update-note/:id
 router.put("/update-note/:id", [authenticateUser], async (req, res) => {
   try {
@@ -91,8 +115,6 @@ router.put("/update-note/:id", [authenticateUser], async (req, res) => {
 // Delete a new note using DELETE method at the endpoint: /api/notes/delete-note/:id
 router.delete("/delete-note/:id", [authenticateUser], async (req, res) => {
   try {
-    const { title, description, tag } = req.body;
-
     // Find the note to be deleted
     let note = await Note.findById(req.params.id);
     if (!note) {
